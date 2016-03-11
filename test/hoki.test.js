@@ -45,4 +45,14 @@ describe('hoki', () => {
     it('should return null if there is no event', () => {
         assert(dispatch('event') === null);
     });
+
+    it('should fire and empty callback if no data is sent by the dispatcher', (done) => {
+        observe('empty-event', () => {
+            assert(true);
+
+            done();
+        });
+
+        dispatch('empty-event');
+    });
 });
