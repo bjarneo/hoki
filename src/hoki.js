@@ -12,7 +12,11 @@ function dispatch(event, data) {
         return null;
     }
 
-    events[event].forEach((callback) => callback.call(null, data));
+    if (!data) {
+        data = '';
+    }
+
+    events[event].forEach((callback) => data ? callback(data) : callback());
 }
 
 function observer(event, callback) {
