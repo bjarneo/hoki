@@ -38,7 +38,6 @@ observe('cat-names', console.log);
 // mittens
 // boots
 
-
 dispatch('cat-names', 'furguson');
 dispatch('cat-names', 'mittens');
 dispatch('cat-names', 'boots');
