@@ -41,4 +41,8 @@ describe('hoki', () => {
 
         assert.throws(() => dispatch(() => {}), /Event must be a string/);
     });
+
+    it('should return null if there is no event', () => {
+        assert(dispatch('event') === null);
+    });
 });
