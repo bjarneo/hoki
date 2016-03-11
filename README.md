@@ -17,6 +17,7 @@ How can I use this library?
 
 Usage
 ------
+API
 ```js
 const observe = require('hoki').observer;
 const dispatch = require('hoki').dispatch;
@@ -25,46 +26,40 @@ observe(string, function);
 dispatch(string, function/object/string/number/etc);
 ```
 
+Example
 ```js
-// Example
 const observe = require('hoki').observer;
 const dispatch = require('hoki').dispatch;
 
 // You always need to specify the observer first so we can observe for events
-observe('cat-names', (name) => {
-    console.log(name);
-    // output in correct order:
-    // furguson
-    // mittens
-    // boots
-});
+observe('cat-names', console.log);
+// output in correct order:
+// furguson
+// mittens
+// boots
+
 
 dispatch('cat-names', 'furguson');
 dispatch('cat-names', 'mittens');
 dispatch('cat-names', 'boots');
 ```
-
+You can also add multiple observers for the same event
 ```js
-// You can also add multiple observers for the same event
 const observe = require('hoki').observer;
 const dispatch = require('hoki').dispatch;
 
 // You always need to specify the observer first so we can observe for events
-observe('cat-names', (name) => {
-    console.log(name);
-    // output in correct order:
-    // furguson
-    // mittens
-    // boots
-});
+observe('cat-names', console.log);
+// output in correct order:
+// furguson
+// mittens
+// boots
 
-observe('cat-names', (name) => {
-    console.log(name);
-    // output in correct order:
-    // furguson
-    // mittens
-    // boots
-});
+observe('cat-names', console.log);
+// output in correct order:
+// furguson
+// mittens
+// boots
 
 dispatch('cat-names', 'furguson');
 dispatch('cat-names', 'mittens');
