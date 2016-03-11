@@ -1,0 +1,34 @@
+{
+  "name": "hoki",
+  "version": "1.0.0",
+  "description": "Plain observer and dispatcher",
+  "keywords": [
+    "observer",
+    "dispatcher",
+    "dispatch",
+    "observer",
+    "event",
+    "events",
+    "trigger",
+    "emit",
+    "emitter",
+    "listen"
+  ],
+  "engines" : {
+    "node" : ">=4.0"
+  },
+  "main": "index.js",
+  "scripts": {
+    "prepublish": "npm test",
+    "test": "mocha -R nyan test/**/*test.js"
+  },
+  "author": "Bjarne Oeverli",
+  "license": "MIT",
+  "devDependencies": {
+    "mocha": "^2.4.5"
+  },
+  "dependencies": {
+    "lodash.isfunction": "^3.0.8",
+    "lodash.isstring": "^4.0.1"
+  }
+}
