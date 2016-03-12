@@ -1,5 +1,5 @@
 const assert = require('assert');
-const hoki = require('../src/hoki');
+const hoki = require('../index');
 const register = hoki.register;
 const unregister = hoki.unregister;
 const observer = hoki.observer;
