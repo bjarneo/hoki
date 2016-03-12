@@ -1,6 +1,6 @@
-const isString = require('lodash.isstring');
-const isFunc = require('lodash.isfunction');
-const isArray = require('lodash.isarray');
+var isString = require('lodash.isstring');
+var isFunc = require('lodash.isfunction');
+var isArray = require('lodash.isarray');
 
 var eventContainer = {};
 
@@ -17,7 +17,7 @@ function register(event) {
         event = [event];
     }
 
-    event.forEach((e) => {
+    event.forEach(function(e) {
         if (eventContainer.hasOwnProperty(e)) {
             return null;
         }
@@ -33,7 +33,7 @@ function unregister(event) {
         event = [event];
     }
 
-    event.forEach((e) => {
+    event.forEach(function(e) {
         if (!eventContainer.hasOwnProperty(e)) {
             return null;
         }
@@ -71,7 +71,9 @@ function dispatch(event, data) {
         data = '';
     }
 
-    eventContainer[event].forEach((callback) => data ? callback(data) : callback());
+    eventContainer[event].forEach(function(callback) {
+        return data ? callback(data) : callback() ;
+    });
 }
 
 function events() {

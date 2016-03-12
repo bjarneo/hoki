@@ -1,6 +1,6 @@
 {
   "name": "hoki",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Plain observer and dispatcher",
   "keywords": [
     "observer",
@@ -14,9 +14,6 @@
     "emitter",
     "listen"
   ],
-  "engines": {
-    "node": ">=4.0"
-  },
   "main": "index.js",
   "scripts": {
     "prepublish": "npm test",
