@@ -64,6 +64,25 @@ dispatch('cat-names', 'furguson');
 dispatch('cat-names', 'mittens');
 dispatch('cat-names', 'boots');
 ```
+
+List all events available
+```js
+const getEvents = require('hoki').getEvents;
+
+console.log(getEvents());
+// [ 'cat-names' ]
+```
+
+If you really need to remove all events
+```js
+const getEvents = require('hoki').getEvents;
+const clear = require('hoki').clear;
+
+clear();
+console.log(getEvents());
+// [ ]
+```
+
 Tests
 ------
 ```bash
