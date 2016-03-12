@@ -60,8 +60,8 @@ describe('hoki', () => {
         assert.throws(() => dispatch(() => {}) === /Event must be a string/);
     });
 
-    it('should return null if there is no event', () => {
-        assert(dispatch('event') === null);
+    it('should return false if there is no event', () => {
+        assert(!dispatch('event'));
     });
 
     it('should fire and empty callback if no data is sent by the dispatcher', (done) => {
