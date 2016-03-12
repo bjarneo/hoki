@@ -1,1 +1,1 @@
-require('./src/hoki');
+module.exports = require('./src/hoki');
