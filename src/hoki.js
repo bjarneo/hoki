@@ -1,3 +1,5 @@
+'use strict';
+
 var isString = require('lodash.isstring');
 var isFunc = require('lodash.isfunction');
 var isArray = require('lodash.isarray');
@@ -15,7 +17,9 @@ function evtStrToArr(event) {
         return event;
     }
 
-    return event = [event];
+    event = [event];
+
+    return event;
 }
 
 function register(event) {
@@ -23,10 +27,12 @@ function register(event) {
 
     evtStrToArr(event).forEach(function(e) {
         if (eventContainer.hasOwnProperty(e)) {
-            return null;
+            return false;
         }
 
         eventContainer[e] = [];
+
+        return true;
     });
 }
 
@@ -35,10 +41,12 @@ function unregister(event) {
 
     evtStrToArr(event).forEach(function(e) {
         if (!eventContainer.hasOwnProperty(e)) {
-            return null;
+            return false;
         }
 
         delete eventContainer[e];
+
+        return true;
     });
 }
 
@@ -52,10 +60,12 @@ function observer(event, callback) {
     }
 
     if (!eventContainer.hasOwnProperty(event)) {
-        return null;
+        return false;
     }
 
     eventContainer[event].push(callback);
+
+    return true;
 }
 
 function dispatch(event, data) {
@@ -64,7 +74,7 @@ function dispatch(event, data) {
     }
 
     if (!eventContainer.hasOwnProperty(event)) {
-        return null;
+        return false;
     }
 
     if (!data) {
@@ -72,8 +82,10 @@ function dispatch(event, data) {
     }
 
     eventContainer[event].forEach(function(callback) {
-        return data ? callback(data) : callback() ;
+        return data ? callback(data) : callback();
     });
+
+    return true;
 }
 
 function events() {

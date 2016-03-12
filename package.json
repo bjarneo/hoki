@@ -1,6 +1,6 @@
 {
   "name": "hoki",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Plain observer and dispatcher",
   "keywords": [
     "observer",
@@ -16,12 +16,22 @@
   ],
   "main": "index.js",
   "scripts": {
-    "prepublish": "npm test",
-    "test": "mocha -R nyan test/**/*test.js"
+    "prepublish": "npm run lint && npm test",
+    "test": "mocha -R nyan test/**/*test.js",
+    "lint": "eslint src/"
   },
-  "author": "Bjarne Oeverli",
+  "author": "Bjarne Oeverli <bjarne.oeverli@gmail.com>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bjarneo/hoki.git"
+  },
+  "homepage": "https://github.com/bjarneo/hoki",
+  "bugs": {
+    "url": "https://github.com/bjarneo/hoki/issues"
+  },
   "devDependencies": {
+    "eslint": "^2.4.0",
     "mocha": "^2.4.5"
   },
   "dependencies": {
