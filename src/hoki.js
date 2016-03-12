@@ -1,7 +1,7 @@
 const isString = require('lodash.isstring');
 const isFunc = require('lodash.isfunction');
 
-const events = {};
+var events = {};
 
 function dispatch(event, data) {
     if (!isString(event)) {
@@ -35,7 +35,17 @@ function observer(event, callback) {
     }
 }
 
+function getEvents() {
+    return Object.keys(events);
+}
+
+function clear() {
+    events = {};
+}
+
 module.exports = {
     dispatch: dispatch,
-    observer: observer
+    observer: observer,
+    getEvents: getEvents,
+    clear: clear
 };
