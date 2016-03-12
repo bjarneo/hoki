@@ -39,8 +39,12 @@ function getEvents() {
     return Object.keys(events);
 }
 
-function clear() {
-    events = {};
+function clear(event) {
+    if (!event) {
+        events = {};
+    }
+
+    delete events[event];
 }
 
 module.exports = {

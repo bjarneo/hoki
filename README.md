@@ -73,12 +73,12 @@ console.log(getEvents());
 // [ 'cat-names' ]
 ```
 
-If you really need to remove all events
+Remove one event
 ```js
 const getEvents = require('hoki').getEvents;
 const clear = require('hoki').clear;
 
-clear();
+clear('cat-names');
 console.log(getEvents());
 // [ ]
 ```

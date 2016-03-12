@@ -61,7 +61,19 @@ describe('hoki', () => {
     it('should return an array of all events available', () => {
         const e = ['my-event', 'my-second-event', 'empty-event'];
 
-        getEvents().map(event => assert(e.indexOf(event) > -1));
+        e.map(event => assert(getEvents().indexOf(event) > -1));
+
+        assert(getEvents().length === 3);
+    });
+
+    it('should clear provided evenet', () => {
+        const e = ['my-second-event', 'empty-event'];
+
+        clear('my-event');
+
+        e.map(event => assert(getEvents().indexOf(event) > -1));
+
+        assert(getEvents().length === 2);
     });
 
     it('should clear all events', () => {

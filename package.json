@@ -1,6 +1,6 @@
 {
   "name": "hoki",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Plain observer and dispatcher",
   "keywords": [
     "observer",
