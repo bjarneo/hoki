@@ -10,14 +10,18 @@ function handleRegisterType(type) {
     }
 }
 
+function evtStrToArr(event) {
+    if (!isString(event)) {
+        return event;
+    }
+
+    return event = [event];
+}
+
 function register(event) {
     handleRegisterType(event);
 
-    if (isString(event)) {
-        event = [event];
-    }
-
-    event.forEach(function(e) {
+    evtStrToArr(event).forEach(function(e) {
         if (eventContainer.hasOwnProperty(e)) {
             return null;
         }
@@ -29,11 +33,7 @@ function register(event) {
 function unregister(event) {
     handleRegisterType(event);
 
-    if (isString(event)) {
-        event = [event];
-    }
-
-    event.forEach(function(e) {
+    evtStrToArr(event).forEach(function(e) {
         if (!eventContainer.hasOwnProperty(e)) {
             return null;
         }
