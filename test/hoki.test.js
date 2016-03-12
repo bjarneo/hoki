@@ -1,13 +1,29 @@
 const assert = require('assert');
 const hoki = require('../src/hoki');
+const register = hoki.register;
+const unregister = hoki.unregister;
+const observer = hoki.observer;
 const dispatch = hoki.dispatch;
-const observe = hoki.observer;
-const getEvents = hoki.getEvents;
-const clear = hoki.clear;
+const events = hoki.events;
 
 describe('hoki', () => {
+    it('should register an event', () => {
+        register('my-event');
+
+        assert(events()[0] === 'my-event');
+        assert(events().length === 1);
+    });
+
+    it('should be able to register multiple events', () => {
+        register(['my-second-event', 'empty-event']);
+
+        assert(events()[1] === 'my-second-event');
+        assert(events()[2] === 'empty-event');
+        assert(events().length === 3);
+    });
+
     it('should observe for an event and fetch it when dispatched', (done) => {
-        observe('my-event', (data) => {
+        observer('my-event', (data) => {
             assert('data yo' === data.msg);
 
             done();
@@ -17,15 +33,15 @@ describe('hoki', () => {
     });
 
     it('should be able to observe for the same event in multiple observers', (done) => {
-        observe('my-second-event', (data) => {
+        observer('my-second-event', (data) => {
             assert('data yo' === data.msg);
         });
 
-        observe('my-second-event', (data) => {
+        observer('my-second-event', (data) => {
             assert('data yo' === data.msg);
         });
 
-        observe('my-second-event', (data) => {
+        observer('my-second-event', (data) => {
             assert('data yo' === data.msg);
 
             done();
@@ -35,11 +51,11 @@ describe('hoki', () => {
     });
 
     it('should throw TypeError exception if the callback is not a function', () => {
-        assert.throws(() => observe('my-event', 'im not a function') === /Callback must be a function/);
+        assert.throws(() => observer('my-event', 'im not a function') === /Callback must be a function/);
     });
 
     it('should throw TypeError exception if the event is not a string', () => {
-        assert.throws(() => observe(() => {}) === /Event must be a string/);
+        assert.throws(() => observer(() => {}) === /Event must be a string/);
 
         assert.throws(() => dispatch(() => {}) === /Event must be a string/);
     });
@@ -49,7 +65,7 @@ describe('hoki', () => {
     });
 
     it('should fire and empty callback if no data is sent by the dispatcher', (done) => {
-        observe('empty-event', () => {
+        observer('empty-event', () => {
             assert(true);
 
             done();
@@ -61,24 +77,24 @@ describe('hoki', () => {
     it('should return an array of all events available', () => {
         const e = ['my-event', 'my-second-event', 'empty-event'];
 
-        e.map(event => assert(getEvents().indexOf(event) > -1));
+        e.map(event => assert(events().indexOf(event) > -1));
 
-        assert(getEvents().length === 3);
+        assert(events().length === 3);
     });
 
-    it('should clear provided evenet', () => {
+    it('should unregister provided event', () => {
         const e = ['my-second-event', 'empty-event'];
 
-        clear('my-event');
+        unregister('my-event');
 
-        e.map(event => assert(getEvents().indexOf(event) > -1));
+        e.map(event => assert(events().indexOf(event) > -1));
 
-        assert(getEvents().length === 2);
+        assert(events().length === 2);
     });
 
-    it('should clear all events', () => {
-        clear();
+    it('should unregister provided events', () => {
+        unregister(['my-second-event', 'empty-event']);
 
-        assert(getEvents().length === 0);
+        assert(events().length === 0);
     });
 });

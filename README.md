@@ -19,20 +19,39 @@ Usage
 ------
 API
 ```js
-const observe = require('hoki').observer;
+const register = require('hoki').register;
+const unregister = require('hoki').unregister;
+const observer = require('hoki').observer;
 const dispatch = require('hoki').dispatch;
+const events = require('hoki').events;
 
-observe(string, function);
+// Can register an event or array of events
+register(string || []);
+
+// Can unregister an event or array of events
+unregister(string || []);
+
+// Can observe for an event, and fire a callback if the event occurs
+observer(string, function);
+
+// Dispatch an event with data. Can also dispatch an empty event
 dispatch(string, function/object/string/number/etc);
+
+// List all events
+events();
 ```
 
 Example
 ```js
-const observe = require('hoki').observer;
+const register = require('hoki').register;
+const observer = require('hoki').observer;
 const dispatch = require('hoki').dispatch;
 
-// You always need to specify the observer first so we can observe for events
-observe('cat-names', console.log);
+// Register your event
+register('cat-names');
+
+// Observe for an event
+observer('cat-names', console.log);
 // output in correct order:
 // furguson
 // mittens
@@ -42,19 +61,22 @@ dispatch('cat-names', 'furguson');
 dispatch('cat-names', 'mittens');
 dispatch('cat-names', 'boots');
 ```
+
 You can also add multiple observers for the same event
 ```js
-const observe = require('hoki').observer;
+const register = require('hoki').register;
+const observer = require('hoki').observer;
 const dispatch = require('hoki').dispatch;
 
-// You always need to specify the observer first so we can observe for events
-observe('cat-names', console.log);
+register('cat-names');
+
+observer('cat-names', console.log);
 // output in correct order:
 // furguson
 // mittens
 // boots
 
-observe('cat-names', console.log);
+observer('cat-names', console.log);
 // output in correct order:
 // furguson
 // mittens
@@ -67,19 +89,19 @@ dispatch('cat-names', 'boots');
 
 List all events available
 ```js
-const getEvents = require('hoki').getEvents;
+const events = require('hoki').events;
 
-console.log(getEvents());
+console.log(events());
 // [ 'cat-names' ]
 ```
 
-Remove one event
+Unregister
 ```js
-const getEvents = require('hoki').getEvents;
-const clear = require('hoki').clear;
+const events = require('hoki').events;
+const unregister = require('hoki').unregister;
 
-clear('cat-names');
-console.log(getEvents());
+unregister('cat-names');
+console.log(events());
 // [ ]
 ```
 

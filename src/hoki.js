@@ -1,22 +1,45 @@
 const isString = require('lodash.isstring');
 const isFunc = require('lodash.isfunction');
+const isArray = require('lodash.isarray');
 
-var events = {};
+var eventContainer = {};
 
-function dispatch(event, data) {
-    if (!isString(event)) {
-        throw new TypeError('Event must be a string');
+function handleRegisterType(type) {
+    if (!isString(type) && !isArray(type)) {
+        throw new TypeError('Event must be a string(event) or array of strings(events)');
+    }
+}
+
+function register(event) {
+    handleRegisterType(event);
+
+    if (isString(event)) {
+        event = [event];
     }
 
-    if (!events.hasOwnProperty(event)) {
-        return null;
+    event.forEach((e) => {
+        if (eventContainer.hasOwnProperty(e)) {
+            return null;
+        }
+
+        eventContainer[e] = [];
+    });
+}
+
+function unregister(event) {
+    handleRegisterType(event);
+
+    if (isString(event)) {
+        event = [event];
     }
 
-    if (!data) {
-        data = '';
-    }
+    event.forEach((e) => {
+        if (!eventContainer.hasOwnProperty(e)) {
+            return null;
+        }
 
-    events[event].forEach((callback) => data ? callback(data) : callback());
+        delete eventContainer[e];
+    });
 }
 
 function observer(event, callback) {
@@ -28,28 +51,37 @@ function observer(event, callback) {
         throw new TypeError('Callback must be a function');
     }
 
-    if (events.hasOwnProperty(event)) {
-        events[event].push(callback);
-    } else {
-        events[event] = [callback];
-    }
-}
-
-function getEvents() {
-    return Object.keys(events);
-}
-
-function clear(event) {
-    if (!event) {
-        events = {};
+    if (!eventContainer.hasOwnProperty(event)) {
+        return null;
     }
 
-    delete events[event];
+    eventContainer[event].push(callback);
+}
+
+function dispatch(event, data) {
+    if (!isString(event)) {
+        throw new TypeError('Event must be a string');
+    }
+
+    if (!eventContainer.hasOwnProperty(event)) {
+        return null;
+    }
+
+    if (!data) {
+        data = '';
+    }
+
+    eventContainer[event].forEach((callback) => data ? callback(data) : callback());
+}
+
+function events() {
+    return Object.keys(eventContainer);
 }
 
 module.exports = {
+    register: register,
+    unregister: unregister,
     dispatch: dispatch,
     observer: observer,
-    getEvents: getEvents,
-    clear: clear
+    events: events
 };
