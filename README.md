@@ -1,5 +1,6 @@
 hoki
 ======
+![Travis](https://travis-ci.org/bjarneo/hoki.svg?branch=master)
 
 What is this?
 ------
