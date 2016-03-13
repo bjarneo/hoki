@@ -12,19 +12,27 @@ describe('hoki', () => {
 
         assert(events()[0] === 'my-event');
         assert(events().length === 1);
+
+        unregister('my-event');
     });
 
     it('should be able to register multiple events', () => {
         register(['my-second-event', 'empty-event']);
 
-        assert(events()[1] === 'my-second-event');
-        assert(events()[2] === 'empty-event');
-        assert(events().length === 3);
+        assert(events()[0] === 'my-second-event');
+        assert(events()[1] === 'empty-event');
+        assert(events().length === 2);
+
+        unregister(['my-second-event', 'empty-event']);
     });
 
     it('should observe for an event and fetch it when dispatched', (done) => {
+        register('my-event');
+
         observer('my-event', (data) => {
             assert('data yo' === data.msg);
+
+            unregister('my-event');
 
             done();
         });
@@ -32,22 +40,83 @@ describe('hoki', () => {
         dispatch('my-event', { msg: 'data yo' });
     });
 
-    it('should be able to observe for the same event in multiple observers', (done) => {
-        observer('my-second-event', (data) => {
-            assert('data yo' === data.msg);
-        });
+    it('should support dispatched functions', (done) => {
+        register('my-custom-event-data');
 
-        observer('my-second-event', (data) => {
-            assert('data yo' === data.msg);
-        });
+        observer('my-custom-event-data', (func) => {
+            assert('data yo' === func());
 
-        observer('my-second-event', (data) => {
-            assert('data yo' === data.msg);
+            unregister('my-custom-event-data');
 
             done();
         });
 
-        dispatch('my-second-event', { msg: 'data yo' });
+        dispatch('my-custom-event-data', () => 'data yo');
+    });
+
+    it('should support dispatched strings', (done) => {
+        register('my-custom-event-data');
+
+        observer('my-custom-event-data', (str) => {
+            assert('data yo' === str);
+
+            unregister('my-custom-event-data');
+
+            done();
+        });
+
+        dispatch('my-custom-event-data', 'data yo');
+    });
+
+    it('should support dispatched numbers', (done) => {
+        register('my-custom-event-data');
+
+        observer('my-custom-event-data', (n) => {
+            assert(1337 === n);
+
+            unregister('my-custom-event-data');
+
+            done();
+        });
+
+        dispatch('my-custom-event-data', 1337);
+    });
+
+    it('should support dispatched objects', (done) => {
+        register('my-custom-event-data');
+
+        observer('my-custom-event-data', (o) => {
+            assert(typeof o === 'object');
+
+            unregister('my-custom-event-data');
+
+            done();
+        });
+
+        dispatch('my-custom-event-data', {});
+    });
+
+    it('should be able to observe for the same event in multiple observers', (done) => {
+        register('my-event');
+
+        observer('my-event', (data) => {
+            assert('data yo' === data.msg);
+        });
+
+        observer('my-event', (data) => {
+            assert('data yo' === data.msg);
+        });
+
+        observer('my-event', (data) => {
+            assert('data yo' === data.msg);
+
+            unregister('my-event');
+
+            done();
+        });
+
+        dispatch('my-event', { msg: 'data yo' });
+
     });
 
     it('should throw TypeError exception if the callback is not a function', () => {
@@ -65,8 +134,12 @@ describe('hoki', () => {
     });
 
     it('should fire and empty callback if no data is sent by the dispatcher', (done) => {
+        register('empty-event');
+
         observer('empty-event', () => {
             assert(true);
+
+            unregister('empty-event');
 
             done();
         });
@@ -77,22 +150,34 @@ describe('hoki', () => {
     it('should return an array of all events available', () => {
         const e = ['my-event', 'my-second-event', 'empty-event'];
 
+        register(e);
+
         e.map(event => assert(events().indexOf(event) > -1));
 
         assert(events().length === 3);
+
+        unregister(e);
     });
 
     it('should unregister provided event', () => {
-        const e = ['my-second-event', 'empty-event'];
+        const e = ['my-second-event'];
 
-        unregister('my-event');
+        register(e);
+
+        unregister('empty-event');
 
         e.map(event => assert(events().indexOf(event) > -1));
 
-        assert(events().length === 2);
+        assert(events().length === 1);
+
+        unregister('my-second-event');
     });
 
     it('should unregister provided events', () => {
+        register(['my-second-event', 'empty-event']);
+
+        assert(events().length === 2);
+
         unregister(['my-second-event', 'empty-event']);
 
         assert(events().length === 0);
