@@ -1,6 +1,6 @@
 {
   "name": "hoki",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Plain observer and dispatcher",
   "keywords": [
     "observer",
@@ -15,6 +15,7 @@
     "listen"
   ],
   "main": "index.js",
+  "tonicExampleFilename": "tonic-example.js",
   "scripts": {
     "prepublish": "npm run lint && npm test",
     "test": "mocha -R nyan test/**/*test.js",
