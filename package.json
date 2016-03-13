@@ -17,7 +17,7 @@
   "main": "index.js",
   "tonicExampleFilename": "tonic-example.js",
   "scripts": {
-    "prepublish": "npm run lint && npm test",
+    "prepublish": "npm test",
     "test": "mocha -R nyan test/**/*test.js && npm run lint",
     "lint": "eslint src/"
   },
