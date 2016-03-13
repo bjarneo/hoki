@@ -52,7 +52,9 @@ const dispatch = require('hoki').dispatch;
 register('cat-names');
 
 // Observe for an event
-observer('cat-names', console.log);
+observer('cat-names', (name) => {
+    console.log(name);
+});
 // output in correct order:
 // furguson
 // mittens
