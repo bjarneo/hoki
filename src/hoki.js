@@ -87,10 +87,6 @@ function dispatcher(event, data) {
         return false;
     }
 
-    if (!data) {
-        data = '';
-    }
-
     eventContainer[event].forEach(function(callback) {
         return data ? callback(data) : callback();
     });
