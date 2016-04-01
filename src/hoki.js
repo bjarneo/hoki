@@ -6,7 +6,7 @@ var isArray = require('lodash.isarray');
 
 // Holds all the events and callbacks
 // {
-//    eventName: function() {}
+//    eventName: [function() {}]
 // }
 var eventContainer = {};
 
