@@ -4,14 +4,20 @@ var isString = require('lodash.isstring');
 var isFunc = require('lodash.isfunction');
 var isArray = require('lodash.isarray');
 
+// Holds all the events and callbacks
+// {
+//    eventName: function() {}
+// }
 var eventContainer = {};
 
+// Error handling
 function handleRegisterType(type) {
     if (!isString(type) && !isArray(type)) {
         throw new TypeError('Event must be a string(event) or array of strings(events)');
     }
 }
 
+// If the event is a string put it in an array and return
 function evtStrToArr(event) {
     if (!isString(event)) {
         return event;
@@ -22,6 +28,7 @@ function evtStrToArr(event) {
     return event;
 }
 
+// Register event(s)
 function register(event) {
     handleRegisterType(event);
 
@@ -36,6 +43,7 @@ function register(event) {
     });
 }
 
+// Unregister event(s)
 function unregister(event) {
     handleRegisterType(event);
 
@@ -50,6 +58,7 @@ function unregister(event) {
     });
 }
 
+// Observe for events => fire a callback if we hit that event
 function observer(event, callback) {
     if (!isString(event)) {
         throw new TypeError('Event must be a string');
@@ -68,6 +77,7 @@ function observer(event, callback) {
     return true;
 }
 
+// Dispatch events with or without data
 function dispatcher(event, data) {
     if (!isString(event)) {
         throw new TypeError('Event must be a string');
@@ -88,6 +98,7 @@ function dispatcher(event, data) {
     return true;
 }
 
+// Return every event available
 function events() {
     return Object.keys(eventContainer);
 }
