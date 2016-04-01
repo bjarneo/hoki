@@ -2,8 +2,8 @@ const assert = require('assert');
 const hoki = require('../index');
 const register = hoki.register;
 const unregister = hoki.unregister;
-const observer = hoki.observer;
-const dispatch = hoki.dispatch;
+const observe = hoki.observer;
+const dispatch = hoki.dispatcher;
 const events = hoki.events;
 
 describe('hoki', () => {
@@ -29,7 +29,7 @@ describe('hoki', () => {
     it('should observe for an event and fetch it when dispatched', (done) => {
         register('my-event');
 
-        observer('my-event', (data) => {
+        observe('my-event', (data) => {
             assert('data yo' === data.msg);
 
             unregister('my-event');
@@ -43,7 +43,7 @@ describe('hoki', () => {
     it('should support dispatched functions', (done) => {
         register('my-custom-event-data');
 
-        observer('my-custom-event-data', (func) => {
+        observe('my-custom-event-data', (func) => {
             assert('data yo' === func());
 
             unregister('my-custom-event-data');
@@ -57,7 +57,7 @@ describe('hoki', () => {
     it('should support dispatched strings', (done) => {
         register('my-custom-event-data');
 
-        observer('my-custom-event-data', (str) => {
+        observe('my-custom-event-data', (str) => {
             assert('data yo' === str);
 
             unregister('my-custom-event-data');
@@ -71,7 +71,7 @@ describe('hoki', () => {
     it('should support dispatched numbers', (done) => {
         register('my-custom-event-data');
 
-        observer('my-custom-event-data', (n) => {
+        observe('my-custom-event-data', (n) => {
             assert(1337 === n);
 
             unregister('my-custom-event-data');
@@ -85,7 +85,7 @@ describe('hoki', () => {
     it('should support dispatched objects', (done) => {
         register('my-custom-event-data');
 
-        observer('my-custom-event-data', (o) => {
+        observe('my-custom-event-data', (o) => {
             assert(typeof o === 'object');
 
             unregister('my-custom-event-data');
@@ -99,15 +99,15 @@ describe('hoki', () => {
     it('should be able to observe for the same event in multiple observers', (done) => {
         register('my-event');
 
-        observer('my-event', (data) => {
+        observe('my-event', (data) => {
             assert('data yo' === data.msg);
         });
 
-        observer('my-event', (data) => {
+        observe('my-event', (data) => {
             assert('data yo' === data.msg);
         });
 
-        observer('my-event', (data) => {
+        observe('my-event', (data) => {
             assert('data yo' === data.msg);
 
             unregister('my-event');
@@ -120,11 +120,11 @@ describe('hoki', () => {
     });
 
     it('should throw TypeError exception if the callback is not a function', () => {
-        assert.throws(() => observer('my-event', 'im not a function') === /Callback must be a function/);
+        assert.throws(() => observe('my-event', 'im not a function') === /Callback must be a function/);
     });
 
     it('should throw TypeError exception if the event is not a string', () => {
-        assert.throws(() => observer(() => {}) === /Event must be a string/);
+        assert.throws(() => observe(() => {}) === /Event must be a string/);
 
         assert.throws(() => dispatch(() => {}) === /Event must be a string/);
     });
@@ -136,7 +136,7 @@ describe('hoki', () => {
     it('should fire and empty callback if no data is sent by the dispatcher', (done) => {
         register('empty-event');
 
-        observer('empty-event', () => {
+        observe('empty-event', () => {
             assert(true);
 
             unregister('empty-event');

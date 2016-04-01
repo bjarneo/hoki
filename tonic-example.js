@@ -1,12 +1,12 @@
 const register = require('hoki').register;
 const observer = require('hoki').observer;
-const dispatch = require('hoki').dispatch;
+const dispatch = require('hoki').dispatcher;
 
 // Register your event
 register('cat-names');
 
 // Observe for an event
-observer('cat-names', console.log);
+observe('cat-names', console.log);
 
 // Dispatch events with data
 dispatch('cat-names', 'furguson');

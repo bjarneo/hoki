@@ -68,7 +68,7 @@ function observer(event, callback) {
     return true;
 }
 
-function dispatch(event, data) {
+function dispatcher(event, data) {
     if (!isString(event)) {
         throw new TypeError('Event must be a string');
     }
@@ -95,7 +95,7 @@ function events() {
 module.exports = {
     register: register,
     unregister: unregister,
-    dispatch: dispatch,
+    dispatcher: dispatcher,
     observer: observer,
     events: events
 };

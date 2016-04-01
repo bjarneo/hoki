@@ -22,8 +22,8 @@ API
 ```js
 const register = require('hoki').register;
 const unregister = require('hoki').unregister;
-const observer = require('hoki').observer;
-const dispatch = require('hoki').dispatch;
+const observe = require('hoki').observer;
+const dispatch = require('hoki').dispatcher;
 const events = require('hoki').events;
 
 // Can register an event or array of events
@@ -33,7 +33,7 @@ register(string || []);
 unregister(string || []);
 
 // Can observe for an event, and fire a callback if the event occurs
-observer(string, function);
+observe(string, function);
 
 // Dispatch an event with data. Can also dispatch an empty event
 dispatch(string, function/object/string/number/etc);
@@ -45,14 +45,14 @@ events();
 Example
 ```js
 const register = require('hoki').register;
-const observer = require('hoki').observer;
-const dispatch = require('hoki').dispatch;
+const observe = require('hoki').observer;
+const dispatch = require('hoki').dispatcher;
 
 // Register your event
 register('cat-names');
 
 // Observe for an event
-observer('cat-names', (name) => {
+observe('cat-names', (name) => {
     console.log(name);
 });
 // output in correct order:
@@ -68,8 +68,8 @@ dispatch('cat-names', 'boots');
 You can also add multiple observers for the same event
 ```js
 const register = require('hoki').register;
-const observer = require('hoki').observer;
-const dispatch = require('hoki').dispatch;
+const observe = require('hoki').observer;
+const dispatch = require('hoki').dispatcher;
 
 register('cat-names');
 
