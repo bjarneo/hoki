@@ -73,13 +73,13 @@ const dispatch = require('hoki').dispatcher;
 
 register('cat-names');
 
-observer('cat-names', console.log);
+observe('cat-names', console.log);
 // output in correct order:
 // furguson
 // mittens
 // boots
 
-observer('cat-names', console.log);
+observe('cat-names', console.log);
 // output in correct order:
 // furguson
 // mittens
