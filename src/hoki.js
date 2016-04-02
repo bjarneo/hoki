@@ -34,12 +34,10 @@ function register(event) {
 
     evtStrToArr(event).forEach(function(e) {
         if (eventContainer.hasOwnProperty(e)) {
-            return false;
+            return;
         }
 
         eventContainer[e] = [];
-
-        return true;
     });
 }
 
@@ -49,12 +47,10 @@ function unregister(event) {
 
     evtStrToArr(event).forEach(function(e) {
         if (!eventContainer.hasOwnProperty(e)) {
-            return false;
+            return;
         }
 
         delete eventContainer[e];
-
-        return true;
     });
 }
 
@@ -69,12 +65,10 @@ function observer(event, callback) {
     }
 
     if (!eventContainer.hasOwnProperty(event)) {
-        return false;
+        return;
     }
 
     eventContainer[event].push(callback);
-
-    return true;
 }
 
 // Dispatch events with or without data
@@ -84,14 +78,12 @@ function dispatcher(event, data) {
     }
 
     if (!eventContainer.hasOwnProperty(event)) {
-        return false;
+        return;
     }
 
     eventContainer[event].forEach(function(callback) {
         return data ? callback(data) : callback();
     });
-
-    return true;
 }
 
 // Return every event available
