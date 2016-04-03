@@ -2,9 +2,13 @@ hoki
 ======
 ![Travis](https://travis-ci.org/bjarneo/hoki.svg?branch=master)
 
-What is this?
-------
-Just a plain straightforward observer and dispatcher.
+Lightweight event emitter.
+
+Should cover basic use cases.
+
+No bloat.
+
+Clean code.
 
 Installation
 ------
@@ -88,6 +92,26 @@ observe('cat-names', console.log);
 dispatch('cat-names', 'furguson');
 dispatch('cat-names', 'mittens');
 dispatch('cat-names', 'boots');
+```
+
+Listen once?
+```js
+const register = require('hoki').register;
+const unregister = require('hoki').unregister;
+const observe = require('hoki').observer;
+const dispatch = require('hoki').dispatcher;
+
+register('listenOnce');
+
+observe('listenOnce', (data) => {
+    unregister('listenOnce');
+
+    console.log(data);
+});
+
+dispatch('listenOnce', 'should run only once');
+dispatch('listenOnce', 'should run only once');
+
 ```
 
 List all events available
