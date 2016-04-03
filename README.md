@@ -2,7 +2,7 @@ hoki
 ======
 ![Travis](https://travis-ci.org/bjarneo/hoki.svg?branch=master)
 
-Lightweight event emitter.
+Lightweight observer and dispatcher.
 
 Should cover basic use cases.
 
