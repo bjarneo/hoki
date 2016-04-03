@@ -36,7 +36,6 @@
     "mocha": "^2.4.5"
   },
   "dependencies": {
-    "lodash.isarray": "^4.0.0",
     "lodash.isfunction": "^3.0.8",
     "lodash.isstring": "^4.0.1"
   }

@@ -2,7 +2,7 @@
 
 var isString = require('lodash.isstring');
 var isFunc = require('lodash.isfunction');
-var isArray = require('lodash.isarray');
+var isArray = Array.isArray;
 
 // Holds all the events and callbacks
 // {
