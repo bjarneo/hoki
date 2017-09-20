@@ -1,43 +1,44 @@
 {
-  "name": "hoki",
-  "version": "2.0.1",
-  "description": "Lightweight observer and dispatcher. No bloat.",
-  "keywords": [
-    "observer",
-    "dispatcher",
-    "dispatch",
-    "observer",
-    "event",
-    "events",
-    "trigger",
-    "emit",
-    "emitter",
-    "listen",
-    "lightweight"
-  ],
-  "main": "index.js",
-  "tonicExampleFilename": "tonic-example.js",
-  "scripts": {
-    "prepublish": "npm test",
-    "test": "mocha -R nyan test/**/*test.js && npm run lint",
-    "lint": "eslint src/"
-  },
-  "author": "Bjarne Oeverli <bjarne.oeverli@gmail.com>",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/bjarneo/hoki.git"
-  },
-  "homepage": "https://github.com/bjarneo/hoki",
-  "bugs": {
-    "url": "https://github.com/bjarneo/hoki/issues"
-  },
-  "devDependencies": {
-    "eslint": "^2.4.0",
-    "mocha": "^2.4.5"
-  },
-  "dependencies": {
-    "lodash.isfunction": "^3.0.8",
-    "lodash.isstring": "^4.0.1"
-  }
+    "name": "hoki",
+    "version": "2.0.1",
+    "description": "Lightweight observer and dispatcher. No bloat.",
+    "keywords": [
+        "observer",
+        "dispatcher",
+        "dispatch",
+        "observer",
+        "event",
+        "events",
+        "trigger",
+        "emit",
+        "emitter",
+        "listen",
+        "lightweight"
+    ],
+    "main": "index.js",
+    "tonicExampleFilename": "tonic-example.js",
+    "scripts": {
+        "prepublish": "npm test",
+        "test": "mocha -R nyan test/**/*test.js",
+        "precommit": "lint-staged"
+    },
+    "lint-staged": {
+        "*.{js,json}": ["prettier --write", "git add"]
+    },
+    "author": "Bjarne Oeverli <bjarne.oeverli@gmail.com>",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/bjarneo/hoki.git"
+    },
+    "homepage": "https://github.com/bjarneo/hoki",
+    "bugs": {
+        "url": "https://github.com/bjarneo/hoki/issues"
+    },
+    "devDependencies": {
+        "husky": "^0.14.3",
+        "lint-staged": "^4.2.1",
+        "mocha": "^2.4.5",
+        "prettier": "^1.7.0"
+    }
 }
