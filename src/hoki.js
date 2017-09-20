@@ -15,7 +15,9 @@ const events = {};
 // Error handling
 function handleRegisterType(type) {
     if (!isString(type) && !isArray(type)) {
-        throw new TypeError('Event must be a string(event) or array of strings(events)');
+        throw new TypeError(
+            'Event must be a string(event) or array of strings(events)'
+        );
     }
 }
 
@@ -86,7 +88,7 @@ function dispatcher(event, data) {
     events[event].forEach(callback => (data ? callback(data) : callback()));
 }
 
-// Return every event available
+// Return events available
 const list = () => Object.keys(events);
 
 module.exports = {
@@ -94,5 +96,5 @@ module.exports = {
     unregister: unregister,
     dispatcher: dispatcher,
     observer: observer,
-    events: list
+    events: list,
 };
