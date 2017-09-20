@@ -11,6 +11,7 @@ describe('hoki', () => {
         register('my-event');
 
         assert(events()[0] === 'my-event');
+
         assert(events().length === 1);
 
         unregister('my-event');
@@ -26,10 +27,10 @@ describe('hoki', () => {
         unregister(['my-second-event', 'empty-event']);
     });
 
-    it('should observe for an event and fetch it when dispatched', (done) => {
+    it('should observe for an event and fetch it when dispatched', done => {
         register('my-event');
 
-        observe('my-event', (data) => {
+        observe('my-event', data => {
             assert('data yo' === data.msg);
 
             unregister('my-event');
@@ -40,10 +41,10 @@ describe('hoki', () => {
         dispatch('my-event', { msg: 'data yo' });
     });
 
-    it('should support dispatched functions', (done) => {
+    it('should support dispatched functions', done => {
         register('my-custom-event-data');
 
-        observe('my-custom-event-data', (func) => {
+        observe('my-custom-event-data', func => {
             assert('data yo' === func());
 
             unregister('my-custom-event-data');
@@ -54,10 +55,10 @@ describe('hoki', () => {
         dispatch('my-custom-event-data', () => 'data yo');
     });
 
-    it('should support dispatched strings', (done) => {
+    it('should support dispatched strings', done => {
         register('my-custom-event-data');
 
-        observe('my-custom-event-data', (str) => {
+        observe('my-custom-event-data', str => {
             assert('data yo' === str);
 
             unregister('my-custom-event-data');
@@ -68,10 +69,10 @@ describe('hoki', () => {
         dispatch('my-custom-event-data', 'data yo');
     });
 
-    it('should support dispatched numbers', (done) => {
+    it('should support dispatched numbers', done => {
         register('my-custom-event-data');
 
-        observe('my-custom-event-data', (n) => {
+        observe('my-custom-event-data', n => {
             assert(1337 === n);
 
             unregister('my-custom-event-data');
@@ -82,10 +83,10 @@ describe('hoki', () => {
         dispatch('my-custom-event-data', 1337);
     });
 
-    it('should support dispatched objects', (done) => {
+    it('should support dispatched objects', done => {
         register('my-custom-event-data');
 
-        observe('my-custom-event-data', (o) => {
+        observe('my-custom-event-data', o => {
             assert(typeof o === 'object');
 
             unregister('my-custom-event-data');
@@ -96,18 +97,18 @@ describe('hoki', () => {
         dispatch('my-custom-event-data', {});
     });
 
-    it('should be able to observe for the same event in multiple observers', (done) => {
+    it('should be able to observe for the same event in multiple observers', done => {
         register('my-event');
 
-        observe('my-event', (data) => {
+        observe('my-event', data => {
             assert('data yo' === data.msg);
         });
 
-        observe('my-event', (data) => {
+        observe('my-event', data => {
             assert('data yo' === data.msg);
         });
 
-        observe('my-event', (data) => {
+        observe('my-event', data => {
             assert('data yo' === data.msg);
 
             unregister('my-event');
@@ -116,11 +117,14 @@ describe('hoki', () => {
         });
 
         dispatch('my-event', { msg: 'data yo' });
-
     });
 
     it('should throw TypeError exception if the callback is not a function', () => {
-        assert.throws(() => observe('my-event', 'im not a function') === /Callback must be a function/);
+        assert.throws(
+            () =>
+                observe('my-event', 'im not a function') ===
+                /Callback must be a function/
+        );
     });
 
     it('should throw TypeError exception if the event is not a string', () => {
@@ -133,7 +137,7 @@ describe('hoki', () => {
         assert(!dispatch('event'));
     });
 
-    it('should fire and empty callback if no data is sent by the dispatcher', (done) => {
+    it('should fire and empty callback if no data is sent by the dispatcher', done => {
         register('empty-event');
 
         observe('empty-event', () => {
