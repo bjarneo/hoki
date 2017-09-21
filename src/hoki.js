@@ -1,14 +1,12 @@
 'use strict';
 
-const is = Object.prototype.toString;
-
-const isString = str => is.call(str) === '[object String]';
-const isFunc = func => is.call(func) === '[object Function]';
+const isString = str => typeof str === 'string';
+const isFunc = func => typeof func === 'function';
 const isArray = Array.isArray;
 
 // Holds all the events and callbacks
 // {
-//    eventName: [function() {}]
+//    eventName: [() => {}]
 // }
 const events = {};
 
@@ -22,26 +20,14 @@ function handleRegisterType(type) {
 }
 
 // If the event is a string put it in an array and return
-function evtStrToArr(event) {
-    if (isArray(event)) {
-        return event;
-    }
-
-    event = [event];
-
-    return event;
-}
+const evtStrToArr = event => isArray(event) ? event : [event];
 
 // Register event(s)
 function register(event) {
     handleRegisterType(event);
 
     evtStrToArr(event).forEach(e => {
-        if (events[e]) {
-            return;
-        }
-
-        events[e] = [];
+        if (!events[e]) events[e] = [];
     });
 }
 
@@ -50,11 +36,7 @@ function unregister(event) {
     handleRegisterType(event);
 
     evtStrToArr(event).forEach(e => {
-        if (!events[e]) {
-            return;
-        }
-
-        delete events[e];
+        if (events[e]) delete events[e];
     });
 }
 
@@ -68,33 +50,24 @@ function observer(event, callback) {
         throw new TypeError('Callback must be a function');
     }
 
-    if (!events[event]) {
-        return;
-    }
-
-    events[event].push(callback);
+    if (events[event]) events[event].push(callback);
 }
 
-// Dispatch events with or without data
+// Dispatch events
 function dispatcher(event, data) {
-    if (!isString(event)) {
-        throw new TypeError('Event must be a string');
-    }
-
-    if (!events[event]) {
-        return;
-    }
-
-    events[event].forEach(callback => (data ? callback(data) : callback()));
+    if (!isString(event)) throw new TypeError('Event must be a string');
+    
+    // call every callback in event list
+    if (events[event]) events[event].forEach(cb => cb(data));
 }
 
 // Return events available
-const list = () => Object.keys(events);
+const events = () => Object.keys(events);
 
 module.exports = {
-    register: register,
-    unregister: unregister,
-    dispatcher: dispatcher,
-    observer: observer,
-    events: list,
-};
+    register,
+    unregister,
+    dispatcher,
+    observer,
+    events
+}
