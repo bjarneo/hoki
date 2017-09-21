@@ -62,12 +62,12 @@ function dispatcher(event, data) {
 }
 
 // Return events available
-const events = () => Object.keys(events);
+const list = () => Object.keys(events);
 
 module.exports = {
     register,
     unregister,
     dispatcher,
     observer,
-    events
+    events: list
 }
