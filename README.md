@@ -24,11 +24,7 @@ Usage
 ------
 API
 ```js
-const register = require('hoki').register;
-const unregister = require('hoki').unregister;
-const observe = require('hoki').observer;
-const dispatch = require('hoki').dispatcher;
-const events = require('hoki').events;
+const {register, unregister, observer, dispatcher, events} = require('hoki');
 
 // Can register an event or array of events
 register(string || []);
@@ -48,15 +44,13 @@ events();
 
 Example
 ```js
-const register = require('hoki').register;
-const observe = require('hoki').observer;
-const dispatch = require('hoki').dispatcher;
+const {register, dispatcher, observer} = require('hoki');
 
 // Register your event
 register('cat-names');
 
 // Observe for an event
-observe('cat-names', (name) => {
+observer('cat-names', name => {
     console.log(name);
 });
 // output in correct order:
@@ -64,59 +58,54 @@ observe('cat-names', (name) => {
 // mittens
 // boots
 
-dispatch('cat-names', 'furguson');
-dispatch('cat-names', 'mittens');
-dispatch('cat-names', 'boots');
+dispatcher('cat-names', 'furguson');
+dispatcher('cat-names', 'mittens');
+dispatcher('cat-names', 'boots');
 ```
 
 You can also add multiple observers for the same event
 ```js
-const register = require('hoki').register;
-const observe = require('hoki').observer;
-const dispatch = require('hoki').dispatcher;
+const {register, observer, dispatcher} = require('hoki');
 
 register('cat-names');
 
-observe('cat-names', console.log);
+observer('cat-names', console.log);
 // output in correct order:
 // furguson
 // mittens
 // boots
 
-observe('cat-names', console.log);
+observer('cat-names', console.log);
 // output in correct order:
 // furguson
 // mittens
 // boots
 
-dispatch('cat-names', 'furguson');
-dispatch('cat-names', 'mittens');
-dispatch('cat-names', 'boots');
+dispatcher('cat-names', 'furguson');
+dispatcher('cat-names', 'mittens');
+dispatcher('cat-names', 'boots');
 ```
 
 Listen once?
 ```js
-const register = require('hoki').register;
-const unregister = require('hoki').unregister;
-const observe = require('hoki').observer;
-const dispatch = require('hoki').dispatcher;
+const {register, unregister, observer, dispatcher} = require('hoki');
 
 register('listenOnce');
 
-observe('listenOnce', (data) => {
+observer('listenOnce', data => {
     unregister('listenOnce');
-
+    
     console.log(data);
 });
 
-dispatch('listenOnce', 'should run only once');
-dispatch('listenOnce', 'should run only once');
+dispatcher('listenOnce', 'should run only once');
+dispatcher('listenOnce', 'should run only once');
 
 ```
 
 List all events available
 ```js
-const events = require('hoki').events;
+const {events} = require('hoki');
 
 console.log(events());
 // [ 'cat-names' ]
@@ -124,8 +113,7 @@ console.log(events());
 
 Unregister
 ```js
-const events = require('hoki').events;
-const unregister = require('hoki').unregister;
+const {events, unregister} = require('hoki');
 
 unregister('cat-names');
 console.log(events());
