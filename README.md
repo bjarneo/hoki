@@ -1,6 +1,7 @@
 hoki
 ======
 ![Travis](https://travis-ci.org/bjarneo/hoki.svg?branch=master)
+![Dependencies](https://david-dm.org/bjarneo/hoki.svg)
 
 Lightweight observer and dispatcher.
 
