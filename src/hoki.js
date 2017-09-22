@@ -8,7 +8,7 @@ const isArray = Array.isArray;
 // {
 //    eventName: [() => {}]
 // }
-const events = {};
+const eventStore = {};
 
 // Error handling
 function handleRegisterType(type) {
@@ -27,7 +27,9 @@ function register(event) {
     handleRegisterType(event);
 
     evtStrToArr(event).forEach(e => {
-        if (!events[e]) events[e] = [];
+        if (!eventStore[e]) {
+            eventStore[e] = [];
+        }
     });
 }
 
@@ -36,7 +38,9 @@ function unregister(event) {
     handleRegisterType(event);
 
     evtStrToArr(event).forEach(e => {
-        if (events[e]) delete events[e];
+        if (eventStore[e]) {
+            delete eventStore[e];
+        }
     });
 }
 
@@ -50,24 +54,30 @@ function observer(event, callback) {
         throw new TypeError('Callback must be a function');
     }
 
-    if (events[event]) events[event].push(callback);
+    if (eventStore[event]) {
+        eventStore[event].push(callback);
+    }
 }
 
 // Dispatch events
 function dispatcher(event, data) {
-    if (!isString(event)) throw new TypeError('Event must be a string');
+    if (!isString(event)) {
+        throw new TypeError('Event must be a string');
+    }
     
     // call every callback in event list
-    if (events[event]) events[event].forEach(cb => cb(data));
+    if (eventStore[event]) {
+        eventStore[event].forEach(cb => cb(data));
+    }
 }
 
 // Return events available
-const list = () => Object.keys(events);
+const events = () => Object.keys(events);
 
 module.exports = {
     register,
     unregister,
     dispatcher,
     observer,
-    events: list
+    events
 }
