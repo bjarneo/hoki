@@ -1,10 +1,13 @@
 const assert = require('assert');
 const hoki = require('../index');
-const register = hoki.register;
-const unregister = hoki.unregister;
-const observe = hoki.observer;
-const dispatch = hoki.dispatcher;
-const events = hoki.events;
+
+const {
+    register, 
+    unregister, 
+    observer: observe, 
+    dispatcher: dispatch, 
+    events
+} = hoki;
 
 describe('hoki', () => {
     it('should register an event', () => {
