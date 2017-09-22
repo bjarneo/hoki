@@ -6,7 +6,7 @@ const dispatch = require('hoki').dispatcher;
 register('cat-names');
 
 // Observe for an event
-observe('cat-names', console.log);
+observer('cat-names', console.log);
 
 // Dispatch events with data
 dispatch('cat-names', 'furguson');
