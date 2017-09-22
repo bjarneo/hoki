@@ -72,7 +72,7 @@ function dispatcher(event, data) {
 }
 
 // Return events available
-const events = () => Object.keys(events);
+const events = () => Object.keys(eventStore);
 
 module.exports = {
     register,
