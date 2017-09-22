@@ -4,8 +4,8 @@ const hoki = require('../index');
 const {
     register, 
     unregister, 
-    observe: observer, 
-    dispatch: dispatcher, 
+    observer: observe, 
+    dispatcher: dispatch, 
     events
 } = hoki;
 
