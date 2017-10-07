@@ -25,7 +25,7 @@ Usage
 ------
 API
 ```js
-const {register, unregister, observer, dispatcher, events} = require('hoki');
+const { register, unregister, observer, dispatcher, events } = require('hoki');
 
 // Can register an event or array of events
 register(string || []);
@@ -45,7 +45,7 @@ events();
 
 Example
 ```js
-const {register, dispatcher, observer} = require('hoki');
+const { register, dispatcher, observer } = require('hoki');
 
 // Register your event
 register('cat-names');
@@ -66,7 +66,7 @@ dispatcher('cat-names', 'boots');
 
 You can also add multiple observers for the same event
 ```js
-const {register, observer, dispatcher} = require('hoki');
+const { register, observer, dispatcher } = require('hoki');
 
 register('cat-names');
 
@@ -89,7 +89,7 @@ dispatcher('cat-names', 'boots');
 
 Listen once?
 ```js
-const {register, unregister, observer, dispatcher} = require('hoki');
+const { register, unregister, observer, dispatcher } = require('hoki');
 
 register('listenOnce');
 
@@ -106,7 +106,7 @@ dispatcher('listenOnce', 'should run only once');
 
 List all events available
 ```js
-const {events} = require('hoki');
+const { events } = require('hoki');
 
 console.log(events());
 // [ 'cat-names' ]
